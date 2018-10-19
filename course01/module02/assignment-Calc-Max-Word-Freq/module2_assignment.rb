@@ -2,26 +2,25 @@
 
 #Implement a class called LineAnalyzer.
 class LineAnalyzer
-  #Implement the following read-only attributes in the LineAnalyzer class. 
-  #* highest_wf_count - a number with maximum number of occurrences for a single word (calculated)
-  #* highest_wf_words - an array of words with the maximum number of occurrences (calculated)
-  #* content          - the string analyzed (provided)
-  #* line_number      - the line number analyzed (provided)
+  attr_reader :highest_wf_count, :highest_wf_words, :content, :line_number
 
-  #Add the following methods in the LineAnalyzer class.
-  #* initialize() - taking a line of text (content) and a line number
-  #* calculate_word_frequency() - calculates result
+  def initialize(content, line_number)
+    @content = content
+    @line_number = line_number
+    calculate_word_frequency
+  end
 
-  #Implement the initialize() method to:
-  #* take in a line of text and line number
-  #* initialize the content and line_number attributes
-  #* call the calculate_word_frequency() method.
-
-  #Implement the calculate_word_frequency() method to:
-  #* calculate the maximum number of times a single word appears within
-  #  provided content and store that in the highest_wf_count attribute.
-  #* identify the words that were used the maximum number of times and
-  #  store that in the highest_wf_words attribute.
+  def calculate_word_frequency
+    unique_words = content.split.uniq
+    @highest_wf_count = 0
+    unique_words.each do |word|
+      curr_count = content.count(curr_word)
+      if curr_count > @highest_wf_count
+        @highest_wf_count = curr_count
+        @highest_wf_words = curr_word
+      end
+    end
+  end
 end
 
 #  Implement a class called Solution. 
