@@ -13,7 +13,7 @@ class LineAnalyzer
   def calculate_word_frequency
     unique_words = content.split.uniq
     @highest_wf_count = 0
-    unique_words.each do |word|
+    unique_words.each do |curr_word|
       curr_count = content.count(curr_word)
       if curr_count > @highest_wf_count
         @highest_wf_count = curr_count
@@ -27,6 +27,7 @@ end
 class Solution
 
   # Implement the following read-only attributes in the Solution class.
+  attr_reader :analyzers, :highest_count_across_lines, :highest_count_words_across_lines
   #* analyzers - an array of LineAnalyzer objects for each line in the file
   #* highest_count_across_lines - a number with the maximum value for highest_wf_words attribute in the analyzers array.
   #* highest_count_words_across_lines - a filtered array of LineAnalyzer objects with the highest_wf_words attribute 
@@ -42,13 +43,27 @@ class Solution
   # Implement the analyze_file() method() to:
   #* Read the 'test.txt' file in lines 
   #* Create an array of LineAnalyzers for each line in the file
+  def analyze_file
+    @analyzers = []
+    File.open("test.txt") do |f|
+      f.each do |line|
+        @analyzers << LineAnalyzer.new(line, 0)
+      end
+    end
+  end
 
   # Implement the calculate_line_with_highest_frequency() method to:
   #* calculate the maximum value for highest_wf_count contained by the LineAnalyzer objects in analyzers array
   #  and stores this result in the highest_count_across_lines attribute.
   #* identifies the LineAnalyzer objects in the analyzers array that have highest_wf_count equal to highest_count_across_lines 
   #  attribute value determined previously and stores them in highest_count_words_across_lines.
+  def calculate_line_with_highest_frequency
+    @highest_count_across_lines = analyzers.max_by { |a| a.highest_wf_count }.line_number
+  end
 
   #Implement the print_highest_word_frequency_across_lines() method to
   #* print the values of objects in highest_count_words_across_lines in the specified format
+  def print_highest_word_frequency_across_lines
+    puts highest_count_words_across_lines 
+  end
 end
