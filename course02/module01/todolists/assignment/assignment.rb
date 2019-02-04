@@ -43,20 +43,19 @@ class Assignment
     TodoList.find(id)
   end
 
-  #
-  # Update rows in DB
-  #
   def update_password(id, password_digest)
-      # accept an id and password_digest input parameters
-      # use the User Model class to update the `password_digest` for the User associated with the id primary key
-      # (no return is required)
+    user = User.find(id)
+
+    user.password_digest = password_digest
+    user.save
   end
 
   def update_listname(id, name)
-      # accept an id and name input parameters
-      # use the TodoList Model class to update the `list_name` for the TodoList associated with id primary key 
-      # (no return is required)
-  end 
+    todo_list = TodoList.find(id)
+
+    todo_list.list_name = name
+    todo_list.save
+  end
 
   #
   # Delete rows from DB
