@@ -27,22 +27,13 @@ class Assignment
       order(list_due_date: :desc)
   end
 
-  #
-  # Query DB with exact match
-  #
   def find_user_byname(username)
-      # accept a username input parameter
-      # use the User Model class to find all Users with the supplied username. 
-      # NOTE:  Username is not unique in the Users table, thus you can have many users with the same username.
-      # return a collection of User instances that match the provided username  
-  end 
+    User.where(username: username)
+  end
 
   def find_todolist_byname(name)
-      # accept a name input parameter
-      # use the TodoList Model class to find all TodoLists with the supplied list_name. 
-      # NOTE: List name is not required to be unique, thus you can have many lists with the same list name.
-      # return a collection of TodoList instances that match the provided name
-  end     
+    TodoList.where(list_name: name)
+  end
 
   #
   # Get rows from DB by PK
