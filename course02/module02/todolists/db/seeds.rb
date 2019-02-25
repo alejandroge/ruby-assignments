@@ -7,27 +7,29 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 Profile.delete_all
 User.delete_all
+TodoList.delete_all
+TodoItem.delete_all
 
-[
-  { first_name: 'Carly', last_name: 'Fiorina', birth_year: 1954 },
-  { first_name: 'Donald', last_name: 'Trump', birth_year: 1946 },
-  { first_name: 'Ben', last_name: 'Carson', birth_year: 1951 },
-  { first_name: 'Hillary', last_name: 'Clinton', birth_year: 1947 }
-].each do |u|
-  user = User.create({ username: u[:last_name], password_digest: 'asdf' })
-  gender = if u[:first_name].include? 'y'
-             'female'
-           else
-             'male'
-           end
-  Profile.create(
-    {
-      gender: gender, birth_year: u[:birth_year], first_name: u[:first_name],
-      last_name: u[:last_name], user: user
-    }
-  )
+user = User.create({ username: 'Fiorina', password_digest: 'asdf' })
+Profile.create(
+  { gender: 'female', birth_year: 1954, first_name: 'Carly', last_name: 'Fiorina', user: user }
+)
+user = User.create({ username: 'Trump', password_digest: 'asdf' })
+Profile.create(
+  { gender: 'male', birth_year: 1946, first_name: 'Donald', last_name: 'Trump', user: user }
+)
+user = User.create({ username: 'Carson', password_digest: 'asdf' })
+Profile.create(
+  { gender: 'male', birth_year: 1951, first_name: 'Ben', last_name: 'Carson', user: user }
+)
+user = User.create({ username: 'Clinton', password_digest: 'asdf' })
+Profile.create(
+  { gender: 'female', birth_year: 1947, first_name: 'Hillary', last_name: 'Clinton', user: user }
+)
+
+User.all.each do |user|
   todo_list = TodoList.create(
-    { list_name: 'MyList', list_due_date: Date.today + 1.year }
+    { list_name: 'MyList', list_due_date: Date.today + 1.year, user: user }
   )
   5.times do |i|
     TodoItem.create(
@@ -37,6 +39,5 @@ User.delete_all
       }
     )
   end
-  user.todo_lists << todo_list
 end
 
